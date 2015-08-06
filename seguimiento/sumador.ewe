@@ -1,0 +1,15 @@
+#sumatoria
+main: uno := 1
+      readInt(n)
+      suma := 0
+      i := uno
+ciclo: if i > n then goto finciclo
+       suma := suma + i
+       i := i + uno
+       goto ciclo
+finciclo: writeInt(suma)
+	  halt
+equ n M[0]
+equ suma M[1]
+equ i M[2]
+equ uno M[3]
