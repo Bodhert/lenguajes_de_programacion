@@ -1,0 +1,21 @@
+main: readInt(a)
+      readInt(b)
+      readInt(c)
+      if a <= b then goto E1
+   E2:if b <= c then goto E4
+   E5: writeInt(b)
+       goto E10
+   E4: if a <= c then goto E8
+   E9: writeInt(c)
+       goto E10
+   E8: writeInt(a)
+       goto E10
+   E1: if a <= c then goto E11
+   E3: goto E8
+   E11: if b <= c then goto E6
+   E7: goto E9
+   E6: goto E5
+   E10: halt
+equ a M[0]
+equ b M[1]
+equ c M[2]
