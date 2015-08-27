@@ -1,0 +1,25 @@
+main:  Cero := 0
+       Uno := 1
+       readInt(a)
+       readInt(b)
+       readInt(c)
+       readInt(d)
+       BmenosC := b - c
+       CmenosD := c - d
+       if a >= BmenosC then  goto E1
+    E2: if b >= CmenosD then  goto E3
+    E4: writeInt(Uno)
+    	goto E5
+    E3: writeInt(Cero)
+    	goto E5
+    E1: goto E3
+    E5: halt
+
+equ a M[0]
+equ b M[1]
+equ c M[2]
+equ d M[3]
+equ BmenosC M[4]
+equ CmenosD M[5]
+equ Cero M[6]
+equ Uno M[7]
