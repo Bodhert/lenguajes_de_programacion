@@ -1,0 +1,21 @@
+main: Cero := 0
+      Uno := 1
+      readInt(a)
+      readInt(b)
+      readInt(c)
+      readInt(d)
+     if a >= b then goto E1
+ E2: if b >= c then goto E1
+ E4: if c >= d then goto E1
+ E6: writeInt(Uno)
+     goto E7
+ E1: writeInt(Cero)
+     goto E7
+ E7: halt
+
+equ a M[0]
+equ b M[1]
+equ c M[2]
+equ d M[3]
+equ Cero M[4]
+equ Uno M[5]
