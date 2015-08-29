@@ -1,0 +1,31 @@
+main: cero := 0
+      uno := 1 
+      len := 100
+      espacio := 32
+      cont := 0
+      readStr(s,len)
+      base := 100
+      i := 0
+ciclo: dir := base + i
+       si := M[dir + 0]
+       if si = cero then goto finciclo
+       if si = espacio then goto finsi
+       i := i + uno
+       goto ciclo
+finsi : i := i + uno
+      	cont := cont + uno
+      	goto ciclo
+finciclo: writeInt(cont)
+	  goto end      
+end: halt
+
+equ cero M[0]
+equ uno M[1]
+equ len M[2]
+equ espacio M[3]
+equ s M[100]
+equ base M[4]
+equ i M[5]
+equ dir M[6]
+equ si M[7]
+equ cont M[8]
