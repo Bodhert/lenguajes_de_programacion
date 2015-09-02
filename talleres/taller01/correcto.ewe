@@ -1,0 +1,15 @@
+main: 
+      cero := 0
+      readInt(a)
+      readInt(b)
+      if a > cero then goto E1
+E1:   if b > cero then goto condtrue
+      writeInt(b)
+      goto final
+condtrue:  writeInt(a) 
+final : halt
+
+equ a M[0]
+equ b M[1]
+equ cero M[2]
+      
