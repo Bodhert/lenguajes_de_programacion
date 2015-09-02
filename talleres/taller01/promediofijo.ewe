@@ -1,13 +1,15 @@
 main: uno := 1
       i := 1
       suma := 0
+      cero := 0
       readInt(n)
 ciclo: if i > n then goto finciclo 
        readInt(a)
        suma := suma + a 
        i := i + uno
        goto ciclo
-finciclo: promedio := suma / n
+finciclo: if n = cero then goto fin
+	  promedio := suma / n
 	  writeInt(promedio)
 	  goto fin 
 fin: halt
@@ -18,4 +20,4 @@ equ suma M[2]
 equ n M[3]
 equ a M[4]
 equ promedio M[5]
- 
+equ cero M[6]
