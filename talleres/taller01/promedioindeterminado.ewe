@@ -1,0 +1,23 @@
+main: 
+      acum := 0
+      sum := 0
+      uno := 1
+      cero := 0
+      readInt(n)
+ciclo: if n <= cero then goto E2
+       acum := acum + uno
+       sum := sum + n
+       readInt(n)
+       goto ciclo
+E2: if acum <> cero then goto E3
+    goto E5
+E3: resultado := sum / acum
+    writeInt(resultado)
+E5: halt
+
+equ acum M[0]
+equ sum M[1]
+equ n M[2]
+equ cero M[3]
+equ uno M[4]
+equ resultado M[5]
