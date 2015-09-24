@@ -1,5 +1,4 @@
-#ifndef token_h
-#define token_h
+#pragma once
 
 #include <string>
 using namespace std;
@@ -36,7 +35,7 @@ class LexicalToken: public Token {
    string* lexeme;
 };
 
-#endif
+
 
 
 

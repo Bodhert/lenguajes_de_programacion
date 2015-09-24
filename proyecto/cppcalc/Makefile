@@ -1,4 +1,4 @@
-CPPFLAGS=-g
+#CPPFLAGS="-Ddebug -g"
 OBJECTS=calc.o scanner.o token.o ast.o parser.o calculator.o
 
 calc: $(OBJECTS)		 
