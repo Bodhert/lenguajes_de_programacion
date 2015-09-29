@@ -1,3 +1,4 @@
+
 #include "scanner.h"
 #include "calcex.h"
 #include <iostream>
@@ -37,6 +38,7 @@ Scanner::Scanner(istream* in):
 Scanner::~Scanner() {
    try {
       delete inStream;
+      if(lastToken != 0) delete lastToken;
    } catch (...) {}
 }
 
@@ -47,7 +49,7 @@ void Scanner::putBackToken() {
 Token* Scanner::getToken() {
    if (!needToken) {
       needToken=true;
-      return lastToken;
+      return lastToken; 
    }
 
    Token* t;
