@@ -102,6 +102,12 @@ int StoreNode::evaluate() {
   return calc -> recall();
 }
 
+RecallNode :: RecallNode() : AST() {}
+ 
+int RecallNode :: evaluate(){
+  return calc -> recall();
+}
+
 
 
 

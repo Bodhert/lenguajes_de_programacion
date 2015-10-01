@@ -34,10 +34,12 @@ AST* Parser::Expr() {
 }
 
 AST* Parser::RestExpr(AST* e) {
-   Token* t = scan->getToken();
 
-   if (t->getType() == add) {
-      return RestExpr(new AddNode(e,Term()));
+  
+    Token* t = scan->getToken();
+
+    if (t->getType() == add) {
+       return RestExpr(new AddNode(e,Term()));
    }
 
    if (t->getType() == sub)
@@ -49,9 +51,64 @@ AST* Parser::RestExpr(AST* e) {
 }
 
 AST* Parser::Term() {
+
+  return RestTerm(Storable());
    //write your Term() code here. This code is just temporary
    //so you can try the calculator out before finishing it.
-   Token* t = scan->getToken();
+   // Token* t = scan->getToken();
+
+   // if (t->getType() == number) {
+   //    istringstream in(t->getLex());
+   //    int val;
+   //    in >> val;
+   //    return new NumNode(val);
+   // }
+
+   // cout << "Term not implemented" << endl;
+
+   // throw ParseError;
+   
+}
+
+AST* Parser::RestTerm(AST* e) {
+    Token* t = scan->getToken();
+
+    if (t->getType() == times) {
+       return RestTerm(new TimesNode(e,Storable()));
+   }
+
+   if (t->getType() == divide)
+     return RestTerm(new DivideNode(e,Storable()));
+
+   scan->putBackToken();
+
+   return e;
+   
+
+   throw ParseError; 
+}
+
+AST* Parser::Storable() {
+  AST *result = Factor();
+
+  Token *t = scan -> getToken();
+
+  if(t -> getType() == keyword)
+    if(t -> getLex() == "S")
+    return new StoreNode(result);
+    else{
+      cout << "Syntax Error: found other keyword at pos " << t -> getCol()
+	   << endl;
+      throw ParseError;
+    }
+  scan -> putBackToken();
+  return result;
+
+   
+}
+
+AST* Parser::Factor() {
+     Token* t = scan->getToken();
 
    if (t->getType() == number) {
       istringstream in(t->getLex());
@@ -59,27 +116,11 @@ AST* Parser::Term() {
       in >> val;
       return new NumNode(val);
    }
-
-   cout << "Term not implemented" << endl;
-
-   throw ParseError; 
-}
-
-AST* Parser::RestTerm(AST* e) {
-   cout << "RestTerm not implemented" << endl;
-
-   throw ParseError; 
-}
-
-AST* Parser::Storable() {
-   cout << "Storable not implemented" << endl;
-
-   throw ParseError; 
-}
-
-AST* Parser::Factor() {
-   cout << "Factor not implemented" << endl;
-
+   if(t -> getType() == keyword){
+     if(t -> getLex() == "R"){
+       return new RecallNode();
+     }
+   }
    throw ParseError; 
 }
    
