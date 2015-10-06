@@ -119,8 +119,34 @@ AST* Parser::Factor() {
    if(t -> getType() == keyword){
      if(t -> getLex() == "R"){
        return new RecallNode();
+     } else{
+       cout << "Syntax error Keyword"
+	    << t -> getLex()
+	    << "at line " << t -> getLine()
+	    << "col : " << t -> getCol() << endl;
+       throw ParseError;
      }
    }
-   throw ParseError; 
+
+   if(t -> getType() == lparen){
+     AST *result = Expr();
+     t = scan -> getToken();
+     if( t -> getType() == rparen){
+       return result;
+     }
+       cout << "Syntax erro expected ) at line:  " <<
+       t -> getLine()<< "col : " <<
+       t -> getCol() << endl;
+       throw ParseError;
+   }
+
+   cout << "Syntax erro expected number, R , ( at line " <<
+       t -> getLine()<< "col : " <<
+       t -> getCol() << endl;
+
+     throw ParseError;
 }
+
+
+
    
