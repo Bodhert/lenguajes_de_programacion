@@ -1,0 +1,3 @@
+Entre la linea 1 (max 24 caracteres): sdfkjsdfjk
+Entre la linea 2 (max 24 caracteres o la primera 'a'): sdfjk
+Aqui la linea 3 (max 24 caracteres): sdfjk
