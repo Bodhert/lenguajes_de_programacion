@@ -34,14 +34,5 @@ main(void) {
     a1[i] = a2[cont];
     cont++;
   }
-
-   for(int i = 0; i < (N * 2) ; i++){
-    cout << " " << a1[i] << " " << endl;
-  }
-
-  
-
-  
-  
   return 0;
 }

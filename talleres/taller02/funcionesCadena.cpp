@@ -25,8 +25,3 @@ const char* indiceAlaDerecha(const char *s, int c){
   return s;
 }
 
-
-int main(){
-  char arr[] = {"hola"};
-  cout << indiceAlaDerecha(arr, 5);
-}
