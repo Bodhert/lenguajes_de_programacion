@@ -8,10 +8,10 @@ intercalate(const int arr1[],
 	    const int nbr,
 	    const int fact) {
   int arr1cont, pos  = 0;
-  int arr2cont;
+  int arr2cont = fact;
   int *final =  new int[nbr];
   
-  nbr == fact ? arr2cont = 0:arr2cont = fact;
+  if(nbr == fact) arr2cont = 0;
     
   while(pos < nbr){ 
     for(int i = 0; i < fact; i++){
