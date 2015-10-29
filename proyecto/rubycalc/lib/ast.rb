@@ -36,7 +36,27 @@ class SubNode < BinaryNode
     return @left.evaluate() - @right.evaluate()
   end
 end
-      
+
+class TimeNode < BinaryNode
+  def initialize(left, right)
+    super(left,right)
+  end
+   
+  def evaluate() 
+    return @left.evaluate() * @right.evaluate()
+  end
+end
+
+class DivideNode < BinaryNode
+  def initialize(left, right)
+    super(left,right)
+  end
+   
+  def evaluate() 
+    return @left.evaluate() / @right.evaluate()
+  end
+end
+
 class NumNode 
   def initialize(num)
     @num = num
