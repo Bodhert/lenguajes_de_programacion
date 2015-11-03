@@ -37,7 +37,7 @@ class SubNode < BinaryNode
   end
 end
 
-class TimeNode < BinaryNode
+class TimesNode < BinaryNode
   def initialize(left, right)
     super(left,right)
   end
@@ -55,6 +55,22 @@ class DivideNode < BinaryNode
   def evaluate() 
     return @left.evaluate() / @right.evaluate()
   end
+end
+
+class StoreNode < UnaryNode
+  def initialize(subTree)
+    super(subTree)
+  end
+  
+  def evaluate
+    $calc.memory = subTree.evaluate()
+  end
+end
+
+class RecallNode
+  def evaluate
+    $calc.memory
+  end 
 end
 
 class NumNode 
