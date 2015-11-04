@@ -8,26 +8,33 @@ using namespace std;
 Calculator* calc;
 
 int main(int argc, char* argv[]) {
-   string line;
- 
-   try {
-
-      cout << "Please enter a calculator expression: ";
-
+  string line;
+  calc = new Calculator();
+  while(true){
+    try {
+      
+      cout << ">  ";
+      
       getline(cin, line);
+      
       // line + '\n';
-
-      calc = new Calculator();
-
-      int result = calc->eval(line);
-
-      cout << "The result is " << result << endl;
-
-      delete calc;
-
-   }
-   catch(Exception ex) {
+      if(!cin.eof()){               // 
+	//calc = new Calculator();
+	
+	int result = calc->eval(line);
+	
+	cout << "=>  " << result << endl;
+	
+	//delete calc;
+      }else
+	break;
+      
+      
+    }
+    catch(Exception ex) {
       cout << "Program Aborted due to exception!" << endl;
-   }
+    }
+  }
+  delete calc;
 }
    

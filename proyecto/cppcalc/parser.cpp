@@ -44,8 +44,11 @@ AST* Parser::RestExpr(AST* e) {
 
    if (t->getType() == sub)
       return RestExpr(new SubNode(e,Term()));
+   
+    if(t->getType() == mod)
+      return RestExpr(new ModNode(e,Term()));
 
-   scan->putBackToken();
+  scan->putBackToken();
 
    return e;
 }

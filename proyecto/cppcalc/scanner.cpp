@@ -75,6 +75,7 @@ Token* Scanner::getToken() {
             else if (c=='+') state=3;
             else if (c=='-') state=4;
             else if (c=='*') state=5;
+	    else if (c=='%') state=9;
             else if (c=='/') state=6;
             else if (c=='(') state=7;
             else if (c==')') state=8;
@@ -114,30 +115,34 @@ Token* Scanner::getToken() {
                foundOne=true;
             }
             break;
-         case 3 :
-            type = add;
-            foundOne = true;
-            break;
-         case 4 :
-            type = sub;
-            foundOne = true;
-            break;
-         case 5 :
-            type = times;
-            foundOne=true;
-            break;
-         case 6 :
-            type = divide;
-            foundOne=true;
-            break;
-         case 7 :
-            type = lparen;
-            foundOne=true;
-            break;
-         case 8 :
-            type = rparen;
-            foundOne=true;
-            break;
+      case 3 :
+	type = add;
+	foundOne = true;
+	break;
+      case 4 :
+	type = sub;
+	foundOne = true;
+	break;
+      case 5 :
+	type = times;
+	foundOne=true;
+	break;
+      case 6 :
+	type = divide;
+	foundOne=true;
+	break;
+      case 7 :
+	type = lparen;
+	foundOne=true;
+	break;
+      case 8 :
+	type = rparen;
+	foundOne=true;
+	break;
+      case 9:
+	type = mod;
+	foundOne = true;
+	break;
       }
       
       if (!foundOne) {
