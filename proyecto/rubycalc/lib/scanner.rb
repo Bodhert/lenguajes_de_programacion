@@ -4,7 +4,7 @@ require 'calcex'
 class Scanner
   def initialize(inStream)
     @istream = inStream
-    @keywords = Set.new(["S","R"])
+    @keywords = Set.new(%w{S,R})
     @lineCount = 1
     @colCount = -1
     @needToken = true
@@ -16,22 +16,22 @@ class Scanner
   end
 
   def getToken()
-    if !@needToken
+    unless @needToken
       @needToken = true
       return @lastToken
     end
     
     state = 0
     foundOne = false
-    c = @istream.getc()
+    c = @istream.getc
     
-    if @istream.eof() then
+    if @istream.eof? then
       @lastToken = Token.new(:eof,@lineCount,@colCount)
       return @lastToken
     end
     
-    while !foundOne
-      @colCount = @colCount + 1
+    until foundOne
+      @colCount +=  1
       case state
       when 0
         lex = ""
