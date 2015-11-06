@@ -1,10 +1,12 @@
 #ifndef calculator_h
 #define calculator_h
 
+#include <map>
 #include <string>
  
 using namespace std;
 
+typedef pair<string, int> pairs;
 
 class Calculator {
  public:
@@ -13,12 +15,15 @@ class Calculator {
    int eval(string expr);
    void store(int val);
    int recall();
-
+   int plus(int val);
+   int minus(int val);
+   int clear();
+   map<string,int> asign;
  private:
    int memory;
+   
 };
 
 extern Calculator* calc;
 
 #endif
-

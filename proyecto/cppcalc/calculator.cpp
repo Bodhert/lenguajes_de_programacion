@@ -32,3 +32,15 @@ void Calculator::store(int val) {
 int Calculator::recall() {
    return memory;
 }
+
+int Calculator::plus(int val){
+  return  memory += val;
+}
+
+int Calculator::minus(int val){
+  return memory -= val;
+}
+int Calculator::clear(){
+  memory = 0;
+  return memory;
+}

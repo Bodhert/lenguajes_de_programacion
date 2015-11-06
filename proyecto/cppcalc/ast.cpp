@@ -1,6 +1,7 @@
 #include "ast.h"
 #include <iostream>
 #include "calculator.h"
+#include <map>
 
 // for debug information uncomment
 //#define debug
@@ -117,9 +118,6 @@ int RecallNode :: evaluate(){
 }
 
 
-
-
-
 NumNode::NumNode(int n) :
    AST(),
    val(n)
@@ -129,4 +127,35 @@ int NumNode::evaluate() {
    return val;
 }
 
+void NumNode::assignate(string n, int val){
+  calc -> asign.insert(pairs(n,val));
+ }
 
+ int NumNode::search(string n){
+   std::map<string,int>::iterator it; 
+     it = calc -> asign.find(n);
+   if(it != calc -> asign.end()) return calc -> asign.find(n) 
+				     -> second;
+   return 0;
+ }
+
+
+PlusNode::PlusNode(AST *sub): UnaryNode(sub){}
+
+int PlusNode::evaluate(){
+  return calc -> plus((getSubTree() -> evaluate())); 
+} 
+
+MinusNode::MinusNode(AST *sub): UnaryNode(sub){} 
+
+int MinusNode::evaluate(){
+  return calc -> minus((getSubTree() -> evaluate()) 
+		       - calc -> recall());
+}
+
+ClearNode::ClearNode():AST(){}
+
+int ClearNode::evaluate(){
+  
+  return calc -> clear();
+}

@@ -22,134 +22,160 @@ AST* Parser::Prog() {
    Token* t = scan->getToken();
 
    if (t->getType() != eof) {
-      cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
-      throw ParseError;
+     cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
+     throw ParseError;
    }
-
+   
    return result;
 }
 
 AST* Parser::Expr() {
-   return RestExpr(Term());
+  return RestExpr(Term());
 }
 
 AST* Parser::RestExpr(AST* e) {
-
   
-    Token* t = scan->getToken();
-
-    if (t->getType() == add) {
-       return RestExpr(new AddNode(e,Term()));
+  
+  Token* t = scan->getToken();
+  
+  if (t->getType() == add) {
+    return RestExpr(new AddNode(e,Term()));
    }
-
-   if (t->getType() == sub)
-      return RestExpr(new SubNode(e,Term()));
-   
-    if(t->getType() == mod)
-      return RestExpr(new ModNode(e,Term()));
-
+  
+  if (t->getType() == sub)
+    return RestExpr(new SubNode(e,Term()));
+  
+  if(t->getType() == mod)
+    return RestExpr(new ModNode(e,Term()));
+  
   scan->putBackToken();
 
-   return e;
+  return e;
 }
 
 AST* Parser::Term() {
-
+  
   return RestTerm(Storable());
-   //write your Term() code here. This code is just temporary
-   //so you can try the calculator out before finishing it.
-   // Token* t = scan->getToken();
-
-   // if (t->getType() == number) {
-   //    istringstream in(t->getLex());
-   //    int val;
-   //    in >> val;
-   //    return new NumNode(val);
-   // }
-
-   // cout << "Term not implemented" << endl;
-
-   // throw ParseError;
-   
+  
 }
 
 AST* Parser::RestTerm(AST* e) {
-    Token* t = scan->getToken();
-
-    if (t->getType() == times) {
-       return RestTerm(new TimesNode(e,Storable()));
-   }
-
-   if (t->getType() == divide)
-     return RestTerm(new DivideNode(e,Storable()));
-
-   scan->putBackToken();
-
-   return e;
-   
-
-   throw ParseError; 
+  Token* t = scan->getToken();
+  
+  if (t->getType() == times) {
+    return RestTerm(new TimesNode(e,Storable()));
+  }
+  
+  if (t->getType() == divide)
+    return RestTerm(new DivideNode(e,Storable()));
+  
+  scan->putBackToken();
+  
+  return e;
+  
+  
+  throw ParseError; 
 }
 
-AST* Parser::Storable() {
+AST* Parser::MemOperation() {
   AST *result = Factor();
-
+  
   Token *t = scan -> getToken();
-
+  
   if(t -> getType() == keyword)
     if(t -> getLex() == "S")
-    return new StoreNode(result);
-    else{
-      cout << "Syntax Error: found other keyword at pos " << t -> getCol()
+      return new StoreNode(result);
+    else if(t -> getLex() == "P"){
+      return new PlusNode(result);
+    }else if(t -> getLex() == "M"){
+      return new MinusNode(result);
+    }else{
+      cout << "Syntax Error: found other keyword at pos " 
+	   << t -> getCol()
 	   << endl;
       throw ParseError;
     }
   scan -> putBackToken();
   return result;
-
-   
+  
+  
 }
+
+AST* Parser::Storable(){
+  return MemOperation();
+} 
 
 AST* Parser::Factor() {
-     Token* t = scan->getToken();
-
-   if (t->getType() == number) {
-      istringstream in(t->getLex());
-      int val;
-      in >> val;
-      return new NumNode(val);
-   }
-   if(t -> getType() == keyword){
-     if(t -> getLex() == "R"){
-       return new RecallNode();
-     } else{
-       cout << "Syntax error Keyword"
-	    << t -> getLex()
-	    << "at line " << t -> getLine()
-	    << "col : " << t -> getCol() << endl;
-       throw ParseError;
-     }
-   }
-
-   if(t -> getType() == lparen){
-     AST *result = Expr();
-     t = scan -> getToken();
-     if( t -> getType() == rparen){
-       return result;
-     }
-       cout << "Syntax erro expected ) at line:  " <<
-       t -> getLine()<< "col : " <<
-       t -> getCol() << endl;
-       throw ParseError;
-   }
-
-   cout << "Syntax erro expected number, R , ( at line " <<
-       t -> getLine()<< "col : " <<
-       t -> getCol() << endl;
-
-     throw ParseError;
+  Token* t = scan->getToken();
+  
+  if (t->getType() == number) {
+    istringstream in(t->getLex());
+    int val;
+    in >> val;
+    return new NumNode(val);
+  }else if(t -> getType() == identifier){
+    istringstream in(t->getLex());
+    string val;
+    in >> val;
+    return (Assignable(val));
+  }
+    
+  
+  if(t -> getType() == keyword){
+    if(t -> getLex() == "R"){
+      return new RecallNode();
+    }else if( t -> getLex() == "C"){
+      return new ClearNode();
+    }
+    else{
+      cout << "Syntax error Keyword"
+	   << t -> getLex()
+	   << "at line " << t -> getLine()
+	   << "col : " << t -> getCol() << endl;
+      throw ParseError;
+    }
+  }
+  
+  if(t -> getType() == lparen){
+    AST *result = Expr();
+    t = scan -> getToken();
+    if( t -> getType() == rparen){
+      return result;
+    }
+    cout << "Syntax error expected ) at line:  " <<
+      t -> getLine()<< "col : " <<
+      t -> getCol() << endl;
+    throw ParseError;
+  }
+  
+  cout << "Syntax error expected number, R , ( at line " <<
+    t -> getLine()<< "col : " <<
+    t -> getCol() << endl;
+  
+  throw ParseError;
 }
 
+AST* Parser::Assignable(string n){
+  cout << "me llego a asignable"<< endl;
+  return Assign(n);
+}
 
+AST* Parser::Assign(string n){
+  cout << "me llego a asign"<< endl;
+  Token *t = scan -> getToken();
+  NumNode* result = new NumNode(0);
+  if(t -> getType() == equals){
+    scan -> putBackToken();
+    t = scan -> getToken();
+    result = new NumNode(Expr() -> evaluate());
+    result -> assignate(n,result -> evaluate());
+  }else{
+    cout << "me entro al esle de assign" << endl;
+    int prueba = result -> search(n);
+    cout << prueba << endl;
+    result  =  new NumNode(prueba);
 
-   
+  }
+  scan -> putBackToken();
+  return result;
+}

@@ -17,8 +17,10 @@ class Parser {
    AST* Term();
    AST* RestTerm(AST* t);
    AST* Storable();
+   AST* MemOperation();
    AST* Factor();
-
+   AST* Assignable(string n);
+   AST* Assign(string n);
    Scanner* scan;
 };
 

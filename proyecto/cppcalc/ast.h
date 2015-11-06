@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 using namespace std;
 
 class AST {
@@ -79,7 +79,8 @@ class NumNode : public AST {
    NumNode(int n);
 
    int evaluate();
-
+   void assignate(string n,int val);
+   int search(string n);
  private:
    int val;
 };
@@ -91,8 +92,25 @@ class RecallNode : public AST {
   int evaluate();
 };
 
+class PlusNode : public UnaryNode {
+ public:
+  PlusNode(AST *sub);
+  
+  int evaluate();
+};
 
+class MinusNode : public UnaryNode{
+ public:
+  MinusNode(AST *sub);
 
+  int evaluate();
+};
 
+class ClearNode : public AST{
+ public:
+  ClearNode();
 
+  int evaluate();
+
+};
 

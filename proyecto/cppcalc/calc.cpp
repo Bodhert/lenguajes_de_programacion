@@ -27,9 +27,7 @@ int main(int argc, char* argv[]) {
 	
 	//delete calc;
       }else
-	break;
-      
-      
+	break;      
     }
     catch(Exception ex) {
       cout << "Program Aborted due to exception!" << endl;
@@ -37,4 +35,3 @@ int main(int argc, char* argv[]) {
   }
   delete calc;
 }
-   

@@ -4,12 +4,11 @@
 using namespace std;
 
 enum TokenType {
-  identifier,keyword,number,add,sub,times,divide,mod,lparen,rparen,eof,unrecognized
+  identifier,keyword,number,add,sub,times,divide,mod,lparen,rparen,equals,eof,unrecognized
 };
 
 class Token {
 public:
-
   Token();
   Token(TokenType typ, int line, int col);
   virtual ~Token();
@@ -34,9 +33,3 @@ class LexicalToken: public Token {
  private:
    string* lexeme;
 };
-
-
-
-
-
-
