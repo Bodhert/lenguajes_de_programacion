@@ -25,5 +25,5 @@ class Calculator {
 };
 
 extern Calculator* calc;
-
+extern string resultExtl;
 #endif

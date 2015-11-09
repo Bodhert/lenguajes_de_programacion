@@ -7,7 +7,7 @@
 using namespace std;
 
 //Uncomment this to get debug information
-#define debug
+//#define debug
 
 const int numberOfKeywords = 5;
 

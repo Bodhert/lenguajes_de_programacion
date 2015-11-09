@@ -128,15 +128,24 @@ int NumNode::evaluate() {
 }
 
 void NumNode::assignate(string n, int val){
-  calc -> asign.insert(pairs(n,val));
+    std::map<string,int>::iterator it;
+     it = calc -> asign.find(n);
+     if(it != calc -> asign.end()){
+       it -> second = val;
+     }else
+       calc -> asign.insert(pairs(n,val));
  }
 
  int NumNode::search(string n){
    std::map<string,int>::iterator it; 
+   // cout << "search de numnode"<<endl;
      it = calc -> asign.find(n);
-   if(it != calc -> asign.end()) return calc -> asign.find(n) 
-				     -> second;
-   return 0;
+     if(it != calc -> asign.end()){ 
+       // cout << calc -> asign.find(n) -> second << endl;
+       return  calc -> asign.find(n) -> second ;
+     }
+     // cout<< 0 << endl;
+     return 0;
  }
 
 
@@ -149,13 +158,11 @@ int PlusNode::evaluate(){
 MinusNode::MinusNode(AST *sub): UnaryNode(sub){} 
 
 int MinusNode::evaluate(){
-  return calc -> minus((getSubTree() -> evaluate()) 
-		       - calc -> recall());
+  return calc -> minus((getSubTree() -> evaluate()));
 }
 
 ClearNode::ClearNode():AST(){}
 
-int ClearNode::evaluate(){
-  
+int ClearNode::evaluate(){  
   return calc -> clear();
 }

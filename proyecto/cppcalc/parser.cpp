@@ -1,7 +1,10 @@
 #include "parser.h"
 #include "calcex.h"
+#include "calculator.h"
 #include <string>
 #include <sstream>
+
+string resultExtl = "";
 
 Parser::Parser(istream* in) {
    scan = new Scanner(in);
@@ -22,7 +25,8 @@ AST* Parser::Prog() {
    Token* t = scan->getToken();
 
    if (t->getType() != eof) {
-     cout << "Syntax Error: Expected EOF, found token at column " << t->getCol() << endl;
+     cout << "Syntax Error: Expected EOF,found token at column " <<
+       t->getCol() << endl;
      throw ParseError;
    }
    
@@ -156,25 +160,29 @@ AST* Parser::Factor() {
 }
 
 AST* Parser::Assignable(string n){
-  cout << "me llego a asignable"<< endl;
+  // cout << "me llego a asignable"<< endl;  
   return Assign(n);
 }
 
 AST* Parser::Assign(string n){
-  cout << "me llego a asign"<< endl;
+  //cout << "me llego a asign"<< endl;
   Token *t = scan -> getToken();
   NumNode* result = new NumNode(0);
+  stringstream stream;
   if(t -> getType() == equals){
     scan -> putBackToken();
     t = scan -> getToken();
     result = new NumNode(Expr() -> evaluate());
     result -> assignate(n,result -> evaluate());
+    stream << result -> evaluate();
+    resultExtl += n + " <- " + "," +  stream.str();
+    resultExtl += result -> evaluate();
   }else{
-    cout << "me entro al esle de assign" << endl;
+    // cout << "me entro al esle de assign" << endl;
     int prueba = result -> search(n);
-    cout << prueba << endl;
+    // cout <<"else prueba " <<  prueba << endl;
     result  =  new NumNode(prueba);
-
+    result -> assignate(n,prueba);
   }
   scan -> putBackToken();
   return result;
