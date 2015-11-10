@@ -62,6 +62,7 @@ Token* Scanner::getToken() {
   int column, line;
   
   c = inStream->get();
+  //cout << inStream->get() << "   impr  scanner" << endl;
   
   while (!foundOne) {
     colCount++;

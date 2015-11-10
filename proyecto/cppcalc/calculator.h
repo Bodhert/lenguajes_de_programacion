@@ -18,6 +18,7 @@ class Calculator {
    int plus(int val);
    int minus(int val);
    int clear();
+   void Print(string expr, int result);
    map<string,int> asign;
  private:
    int memory;

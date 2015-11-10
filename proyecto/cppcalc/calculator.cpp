@@ -11,13 +11,15 @@ Calculator::Calculator():
 {}
 
 int Calculator::eval(string expr) {
-
+ 
    Parser* parser = new Parser(new istringstream(expr));
    
    AST* tree = parser->parse();
    
    int result = tree->evaluate();
    
+   calc -> Print(expr, result);
+ 
    delete tree;
    
    delete parser;
@@ -44,3 +46,14 @@ int Calculator::clear(){
   memory = 0;
   return memory;
 }
+
+void Calculator::Print(string expr, int result){
+  size_t find = expr.find("=");
+  if(find != string::npos){
+    resultExtl = resultExtl.substr(0,resultExtl.size()-1);
+    cout << "=>" << result << " [" << resultExtl << "]" << endl;
+    resultExtl = "";
+  }else
+    cout << "=>" << result << endl;
+}
+

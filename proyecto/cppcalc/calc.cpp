@@ -73,9 +73,9 @@ int main(int argc, char* argv[], char* env[]) {
       if(!cin.eof()){               // 
   	//calc = new Calculator();
 	
-  	int result = calc->eval(line);
+  	 calc->eval(line);
 	
-	cout << resultExtl << endl;
+	//cout << result << "[" <<  resultExtl << "]" << endl;
 
   	//cout << resultExtl << "=>  " << result << endl;
 	
