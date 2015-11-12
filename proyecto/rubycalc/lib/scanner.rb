@@ -4,7 +4,7 @@ require 'calcex'
 class Scanner
   def initialize(inStream)
     @istream = inStream
-    @keywords = Set.new(%w{S,R})
+    @keywords = Set.new(%w{S R})
     @lineCount = 1
     @colCount = -1
     @needToken = true
