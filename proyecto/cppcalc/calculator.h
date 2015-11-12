@@ -19,6 +19,12 @@ class Calculator {
    int minus(int val);
    int clear();
    void Print(string expr, int result);
+   string getN(string expr);
+   bool searchF(string expr);
+   void assignate(string n, int val);
+   int search(string n);
+   void amb(char *env[]);
+   bool vars(string n);
    map<string,int> asign;
  private:
    int memory;

@@ -16,53 +16,58 @@ int main(int argc, char* argv[], char* env[]) {
   string toEval;
   int result;
   bool pref;
+  bool amb = true;
   calc = new Calculator();
-  // cout << "antes de interactivo"<< endl;
   
-  for (int j = 1; env[j] != NULL; j++){
-    string envi = env[j];
-    if(envi.find("CALCVAR")==0){
-      toEval = envi.substr(7,envi.size());
-      result = calc -> eval(toEval);
-    }
-  }  
+  calc -> amb(env);
+  
+  pref = false;
   
   for(int i = 1; i < argc; i++){
-    comand = argv[i];
-    pref = true;
+    comand = argv[i];  
     if(comand == "-e"){
-      for (int j = 1; env[j] != NULL; j++){
-	string envi = env[j];
-	if(envi.find("CALCVAR")==0){
-	  pref = false;
-	  toEval = envi.substr(7,envi.size());
-	  result = calc -> eval(toEval);
-	  i++;
-	  comand = argv[i];
+      pref = true;
+    }else if(comand == "-v"){
+      i++;
+      string v = argv[i];
+      if(pref){
+	if(!(calc -> vars(v))){
+	  size_t cut = v.find("=");
+	  string asi = v.substr(0,cut);
+	  string gn = v.substr(cut+1,v.size());
+	  istringstream buffer(gn);
+	  int value;
+	  buffer >> value;
+	  calc -> assignate(asi,value);
 	}
+      }else{
+	size_t cut = v.find("=");
+	string asi = v.substr(0,cut);
+	string gn = v.substr(cut+1,v.size());
+	istringstream buffer(gn);
+	int value;
+	buffer >> value;
+	calc -> assignate(asi,value);
       }
     }
 
-    if(comand == "-v" && pref){
-      toEval = argv[i+1];
-      result = calc -> eval(toEval);
-    }
-
+    int max =200;
     size_t found = comand.find(".");
-    if(found != string::npos ){
+    if(found != string::npos){
+      amb = false;
+      char n[max];
       ifstream file(argv[i]);
-      if(file.is_open()){
-	while(getline(file,toEval)){
-	  result = calc -> eval(toEval);
-	  // cout << result << endl;
-	}
-	file.close();
-      }
+      while(file.getline(n,max)){
+       	string ton(n);
+       	calc -> eval(ton);
+      }	
+      file.close();
     }
   }
   
   
-  while(true){
+  
+  while(amb){
     try {
       
       cout << ">  ";

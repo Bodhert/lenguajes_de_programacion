@@ -7,30 +7,30 @@
 string resultExtl = "";
 
 Parser::Parser(istream* in) {
-   scan = new Scanner(in);
+  scan = new Scanner(in);
 }
 
 Parser::~Parser() {
-   try {
-      delete scan;
-   } catch (...) {}
+  try {
+    delete scan;
+  } catch (...) {}
 }
 
 AST* Parser::parse() {
-   return Prog();
+  return Prog();
 }
 
 AST* Parser::Prog() {
-   AST* result = Expr();
-   Token* t = scan->getToken();
-
-   if (t->getType() != eof) {
-     cout << "Syntax Error: Expected EOF,found token at column " <<
-       t->getCol() << endl;
-     throw ParseError;
-   }
-   
-   return result;
+  AST* result = Expr();
+  Token* t = scan->getToken();
+  
+  if (t->getType() != eof) {
+    cout << "Syntax Error: Expected EOF,found token at column " <<
+      t->getCol() << endl;
+    throw ParseError;
+  }
+  
+  return result;
 }
 
 AST* Parser::Expr() {
@@ -44,7 +44,7 @@ AST* Parser::RestExpr(AST* e) {
   
   if (t->getType() == add) {
     return RestExpr(new AddNode(e,Term()));
-   }
+  }
   
   if (t->getType() == sub)
     return RestExpr(new SubNode(e,Term()));
@@ -53,7 +53,7 @@ AST* Parser::RestExpr(AST* e) {
     return RestExpr(new ModNode(e,Term()));
   
   scan->putBackToken();
-
+  
   return e;
 }
 

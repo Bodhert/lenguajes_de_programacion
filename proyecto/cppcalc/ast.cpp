@@ -128,24 +128,19 @@ int NumNode::evaluate() {
 }
 
 void NumNode::assignate(string n, int val){
-    std::map<string,int>::iterator it;
-     it = calc -> asign.find(n);
-     if(it != calc -> asign.end()){
-       it -> second = val;
-     }else
-       calc -> asign.insert(pairs(n,val));
+  calc -> assignate(n,val);
  }
 
  int NumNode::search(string n){
    std::map<string,int>::iterator it; 
    // cout << "search de numnode"<<endl;
-     it = calc -> asign.find(n);
-     if(it != calc -> asign.end()){ 
-       // cout << calc -> asign.find(n) -> second << endl;
-       return  calc -> asign.find(n) -> second ;
-     }
-     // cout<< 0 << endl;
-     return 0;
+   it = calc -> asign.find(n);
+   if(it != calc -> asign.end()){ 
+     // cout << calc -> asign.find(n) -> second << endl;
+     return  calc -> asign.find(n) -> second ;
+   }
+   // cout<< 0 << endl;
+   return 0;
  }
 
 
