@@ -37,8 +37,10 @@ int main(int argc, char* argv[], char* env[]) {
 		string gn = v.substr(cut+1,v.size());
 		istringstream buffer(gn);
 		int value;
-		buffer >> value;
-		calc -> assignate(asi,value);
+	        if((buffer >> value).fail()){
+		  cout << "error" << endl;
+		}else
+		  calc -> assignate(asi,value);
 	      }
 	    }else{
 	      size_t cut = v.find("=");
@@ -46,8 +48,10 @@ int main(int argc, char* argv[], char* env[]) {
 	      string gn = v.substr(cut+1,v.size());
 	      istringstream buffer(gn);
 	      int value;
-	      buffer >> value;
-	      calc -> assignate(asi,value);
+	      if((buffer >> value).fail()){
+		cout << "error" << endl;
+	      }else
+		calc -> assignate(asi,value);
 	    }
 	  }
 

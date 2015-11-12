@@ -118,10 +118,8 @@ AST* Parser::Factor() {
     in >> val;
     return new NumNode(val);
   }else if(t -> getType() == identifier){
-    istringstream in(t->getLex());
-    string val;
-    in >> val;
-    return (Assignable(val));
+    scan -> putBackToken();
+    return (Assignable());
   }
     
   
@@ -159,9 +157,11 @@ AST* Parser::Factor() {
   throw ParseError;
 }
 
-AST* Parser::Assignable(string n){
-  // cout << "me llego a asignable"<< endl;  
+AST* Parser::Assignable(){
+  Token *t = scan -> getToken();
+  string n = t -> getLex();
   return Assign(n);
+  
 }
 
 AST* Parser::Assign(string n){

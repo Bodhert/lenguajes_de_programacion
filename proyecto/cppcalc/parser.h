@@ -19,7 +19,7 @@ class Parser {
    AST* Storable();
    AST* MemOperation();
    AST* Factor();
-   AST* Assignable(string n);
+   AST* Assignable();
    AST* Assign(string n);
    Scanner* scan;
 };

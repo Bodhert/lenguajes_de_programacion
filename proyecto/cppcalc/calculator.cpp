@@ -91,7 +91,6 @@ void Calculator::amb(char *env[]){
 	string temp2 = toEval.substr(cut+1,toEval.size());
 	istringstream buffer(temp2);
 	int value;
-	//buffer >> value;
 	if((buffer >> value).fail()){
 	  cout << "error" << endl;
 	 }else
