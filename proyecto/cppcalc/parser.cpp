@@ -25,8 +25,8 @@ AST* Parser::Prog() {
   Token* t = scan->getToken();
   
   if (t->getType() != eof) {
-    cout << "Syntax Error: Expected EOF,found token at column " <<
-      t->getCol() << endl;
+    //    cout << "Syntax Error: Expected EOF,found token at column " <<
+    //  t->getCol() << endl;
     throw ParseError;
   }
   
@@ -94,9 +94,9 @@ AST* Parser::MemOperation() {
     }else if(t -> getLex() == "M"){
       return new MinusNode(result);
     }else{
-      cout << "Syntax Error: found other keyword at pos " 
-	   << t -> getCol()
-	   << endl;
+      //cout << "Syntax Error: found other keyword at pos " 
+      //   << t -> getCol()
+      //   << endl;
       throw ParseError;
     }
   scan -> putBackToken();
@@ -132,10 +132,10 @@ AST* Parser::Factor() {
       return new ClearNode();
     }
     else{
-      cout << "Syntax error Keyword"
-	   << t -> getLex()
-	   << "at line " << t -> getLine()
-	   << "col : " << t -> getCol() << endl;
+      //      cout << "Syntax error Keyword"
+      //   << t -> getLex()
+      //   << "at line " << t -> getLine()
+      //   << "col : " << t -> getCol() << endl;
       throw ParseError;
     }
   }
@@ -146,16 +146,16 @@ AST* Parser::Factor() {
     if( t -> getType() == rparen){
       return result;
     }
-    cout << "Syntax error expected ) at line:  " <<
-      t -> getLine()<< "col : " <<
-      t -> getCol() << endl;
+    //cout << "Syntax error expected ) at line:  " <<
+    // t -> getLine()<< "col : " <<
+    // t -> getCol() << endl;
     throw ParseError;
   }
   
-  cout << "Syntax error expected number, R , ( at line " <<
-    t -> getLine()<< "col : " <<
-    t -> getCol() << endl;
-  
+  // cout << "Syntax error expected number, R , ( at line " <<
+  //   t -> getLine()<< "col : " <<
+  //   t -> getCol() << endl;
+ 
   throw ParseError;
 }
 
