@@ -50,8 +50,8 @@ int Calculator::clear(){
 void Calculator::Print(string expr, int result){
   size_t find = expr.find("=");
   if(find != string::npos){
-    resultExtl = resultExtl.substr(0,resultExtl.size()-1);
-    cout << "=> " << result << " [" << resultExtl << "]" << endl;
+    resultExtl = resultExtl.substr(0,resultExtl.size()-2);
+    cout << "=> " << result << " [" << resultExtl <<   "]" << endl;
     resultExtl = "";
   }else
     cout << "=> " << result << endl;
@@ -105,7 +105,6 @@ bool Calculator::vars(string n){
   size_t cut = toEval.find("=");
   if(cut != string::npos){
     toEval = toEval.substr(0,cut);
-    //cout << "toEval es  " << toEval;
   }
   if(searchF(toEval)) return true;
   return false;

@@ -15,13 +15,11 @@ int main(int argc, char* argv[], char* env[]) {
   string comand;
   string toEval;
   int result;
-  bool pref;
+  bool pref = false;
   bool amb = true;
   calc = new Calculator();
-
   calc -> amb(env);
-
-  pref = false;
+  // pref = false;
   
       for(int i = 1; i < argc; i++){
 	  comand = argv[i];  
@@ -49,7 +47,7 @@ int main(int argc, char* argv[], char* env[]) {
 	      istringstream buffer(gn);
 	      int value;
 	      if((buffer >> value).fail()){
-		cout << "error" << endl;
+		cout << "*parse error" << endl;
 	      }else
 		calc -> assignate(asi,value);
 	    }
@@ -70,29 +68,23 @@ int main(int argc, char* argv[], char* env[]) {
 	      }  
 	    }	
 	    file.close();
-	  }
-	
+	  }	
       }
-  
-  
-  while(amb){
-    try {
-      
-      cout << ">  ";
-      
-      getline(cin, line);
-      
-      if(!cin.eof()){                
-  		
-  	 calc->eval(line);
-	
+ 
 
-      }else
-  	break;      
-    }
-    catch(Exception ex) {
-      cout << "*parser error" << endl;
-    }
-  }
-  delete calc;
+      
+      while(amb){
+	try {
+	  cout << "> ";	    
+	  getline(cin, line);
+	  if(!cin.eof()){                
+	    calc->eval(line);   
+	  }else
+	    break;      
+	}
+	catch(Exception ex) {
+	  cout << "*parser error" << endl;
+	}
+      }      
+      delete calc;
 }

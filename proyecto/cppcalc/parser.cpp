@@ -175,7 +175,7 @@ AST* Parser::Assign(string n){
     result = new NumNode(Expr() -> evaluate());
     result -> assignate(n,result -> evaluate());
     stream << result -> evaluate();
-    resultExtl += n + " <- " +  stream.str() + ",";
+    resultExtl += n + " <- " +  stream.str() + ", ";
     //resultExtl = resultExtl.substr(0,resultExtl.size()-1);
   }else{
     // cout << "me entro al esle de assign" << endl;
