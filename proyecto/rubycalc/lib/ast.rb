@@ -30,8 +30,7 @@ end
 class SubNode < BinaryNode
   def initialize(left, right)
     super(left,right)
-  end
-   
+  end   
   def evaluate() 
     return @left.evaluate() - @right.evaluate()
   end
@@ -57,6 +56,16 @@ class DivideNode < BinaryNode
   end
 end
 
+class ModNode < BinaryNode
+  def initialize(left,right)
+    super(left,right)
+  end
+
+  def evaluate()
+    return @left.evaluate() % @right.evaluate()
+  end
+end
+
 class StoreNode < UnaryNode
   def initialize(subTree)
     super(subTree)
@@ -73,11 +82,45 @@ class RecallNode
   end 
 end
 
+class MinusNode < UnaryNode
+  def initialize(subTree)
+    super(subTree)
+  end
+  
+  def evaluate
+    $calc.memory -= subTree.evaluate()
+  end
+end
+
+class PlusNode < UnaryNode
+  def initialize(subTree)
+    super(subTree)
+  end
+
+  def evaluate
+    $calc.memory += subTree.evaluate()
+  end
+end
+
+class ClearNode
+  def evaluate
+    $calc.memory = 0
+  end
+end
+
 class NumNode 
   def initialize(num)
     @num = num
   end
-   
+
+  def search var
+    @num = $calc.search(var)
+  end
+
+  def assign (var)
+    $calc.assign(var,@num)
+  end
+
   def evaluate() 
     return @num
   end

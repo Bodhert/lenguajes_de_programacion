@@ -7,11 +7,22 @@ require 'calcex'
 $stdout.print "> "
 $stdout.flush
 
-text = gets
-
 $calc = Calculator.new()
 
-begin
+$calc.enviroment
+
+text = gets
+
+
+
+# ARGV.each do |v|
+#   case v
+#   when "-v"
+#     puts v.to_i
+#   end
+# end
+    
+  begin
   puts "= " + $calc.eval(text).to_s
 rescue ParseError
   puts "Parse Error"

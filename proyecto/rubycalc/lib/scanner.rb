@@ -4,7 +4,7 @@ require 'calcex'
 class Scanner
   def initialize(inStream)
     @istream = inStream
-    @keywords = Set.new(%w{S R})
+    @keywords = Set.new(%w{S R M P C})
     @lineCount = 1
     @colCount = -1
     @needToken = true
@@ -45,6 +45,8 @@ class Scanner
         elsif c == ?/ then state = 6
         elsif c == ?( then state = 7
         elsif c == ?) then state = 8
+        elsif c == ?% then state = 9
+        elsif c == ?= then state = 10
         elsif c == ?\n then 
           @colCount = -1
           @lineCount = @lineCount+1
@@ -90,6 +92,12 @@ class Scanner
         foundOne = true
       when 8
         type = :rparen
+        foundOne = true
+      when 9
+        type = :mod
+        foundOne = true
+      when 10
+        type = :equals
         foundOne = true
       end
 

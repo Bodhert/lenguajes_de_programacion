@@ -40,9 +40,9 @@ class Parser
       return RestExpr(SubNode.new(e,Term()))
     end
     
-    @scan.putBackToken
-    
+    @scan.putBackToken    
      e
+
   end
   
   def Term
@@ -59,7 +59,9 @@ class Parser
     if t.type == :divide then
       return RestTerm(DivideNode.new(e,Storable()))
     end
-    
+    if t.type == :mod then
+        return RestTerm(ModNode.new(e,Storable()))
+    end    
     @scan.putBackToken
     return e
    
@@ -67,20 +69,46 @@ class Parser
    
   def Storable()
     result = Factor()
+    return MemOperation(result)
+  end
+
+  def MemOperation(result)
     t = @scan.getToken
     if t.type == :keyword then
-      if t.lex == "S" then
+      if t.lex == "S" 
         return StoreNode.new(result)
+      elsif t.lex == "M"
+        return MinusNode.new(result)
+      elsif t.lex == "P"
+        return PlusNode.new(result)
       end
-    
-      puts "Expected S found #{t.type} at line #{t.line}"
-      raise ParseError.new
 
+      puts "Expected S or M or P  found #{t.type} at line #{t.line}"
+      raise ParseError.new   
     end
     @scan.putBackToken
     result
   end
    
+  def Assignable
+    t = @scan.getToken
+    Assign(t.lex.to_s)
+  end
+  
+  def Assign lex
+    t = @scan.getToken
+    #result = NumNode.new(0)
+    if t.type == :equals
+      result = NumNode.new(Expr().evaluate())
+      result.assign lex
+    else
+      @scan.putBackToken
+      result = NumNode.new(0)
+      result.search lex    
+    end
+    return result
+  end
+
   def Factor() 
     t = @scan.getToken
     
@@ -88,9 +116,16 @@ class Parser
       return NumNode.new t.lex.to_i
     end
     
+    if t.type == :identifier then
+      @scan.putBackToken
+      return Assignable()
+    end
+    
     if t.type == :keyword then
-      if t.lex == "R" then
+      if t.lex == "R" 
         return RecallNode.new
+      elsif t.lex == "C"
+        return ClearNode.new
       end
       puts "Parse Error: expected R found: " + t.lex
       puts "at line: " + t.line.to_s + "col: " + t.col.to_s
@@ -104,13 +139,12 @@ class Parser
         return result
       end
       puts "Parse Error "
-      puts "at lune"
+      puts "at line: " + t.line.to_s + "col: " + t.col.to_s
       raise ParseError.new
     end
-    
+  
     print "Parse "
-    puts "at line"
+    puts "at line: " + t.line.to_s + "col: " + t.col.to_s
     raise ParseError.new
   end
-  
 end
