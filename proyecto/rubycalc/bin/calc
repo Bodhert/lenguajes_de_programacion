@@ -11,18 +11,31 @@ $calc = Calculator.new()
 
 $calc.enviroment
 
-text = gets
+preference = false 
 
+for i in 0..ARGV.length 
+  if ARGV[i] == "-e"
+    preference = true
+  elsif ARGV[i] == "-v"
+    i = i + 1
+    var = ARGV[i]
+    if preference
+      variable = $calc.splitVar(var)
+      integer = $calc.splitInt(var)
+      unless $calc.search1(variable)
+        $calc.assign(variable,integer)
+      end
+    else
+      variable = $calc.splitVar(var)
+      integer = $calc.splitInt(var)
+      $calc.assign(variable,integer)
+    end
+  end
+end
 
+text = $stdin.gets
 
-# ARGV.each do |v|
-#   case v
-#   when "-v"
-#     puts v.to_i
-#   end
-# end
-    
-  begin
+begin
   puts "= " + $calc.eval(text).to_s
 rescue ParseError
   puts "Parse Error"

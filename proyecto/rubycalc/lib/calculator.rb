@@ -23,6 +23,10 @@ class Calculator
       return 0
     end
   end
+
+  def search1 (var)
+    return @map.has_key?(var)
+  end
   
   def assign(var,result) 
     @map[var] = result
@@ -31,7 +35,7 @@ class Calculator
   def enviroment
     ENV.each_pair do |k, v|
       tempVar = "#{tempVar}#{k}"
-      prueba = "#{v}\n"
+      prueba = "#{v}" # le quite un \n
       tempVar.to_s
       if tempVar.start_with?("CALCVAR")
         variable = tempVar[7,tempVar.length]
@@ -40,10 +44,17 @@ class Calculator
     end
   end
 
-  def argumentos 
-    name = ARGV.first
-    
-    puts "Hello #{name}, good day!"
+  def splitVar str
+    equal = str.index('=')
+    var = str[0,equal]
+    return var.to_s
   end
+  
+  def splitInt str
+    equal = str.index('=')
+    var = str[equal+1,str.length]
+    return var.to_i
+  end
+
 
 end
