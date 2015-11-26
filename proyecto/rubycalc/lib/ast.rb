@@ -88,7 +88,8 @@ class MinusNode < UnaryNode
   end
   
   def evaluate
-    $calc.memory -= subTree.evaluate()
+    min = subTree.evaluate()
+    $calc.memory -= min
   end
 end
 
@@ -98,7 +99,8 @@ class PlusNode < UnaryNode
   end
 
   def evaluate
-    $calc.memory += subTree.evaluate()
+    plus = subTree.evaluate()
+    $calc.memory += plus
   end
 end
 

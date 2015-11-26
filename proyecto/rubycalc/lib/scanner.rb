@@ -2,13 +2,17 @@ require 'stringio'
 require 'calcex'
 
 class Scanner
-  def initialize(inStream)
-    @istream = inStream
+  def initialize()
+    @istream = StringIO.new("")
     @keywords = Set.new(%w{S R M P C})
     @lineCount = 1
     @colCount = -1
     @needToken = true
     @lastToken = nil
+  end
+
+  def setLine(line)
+    @istream = StringIO.new(line)
   end
   
   def putBackToken()
@@ -103,9 +107,12 @@ class Scanner
 
       if !foundOne then
         lex.concat(c)
+       if @istream.eof() and state == 0
+         @lastToken = Token.new(:eof,@lineCount,@colCount)
+         return @lastToken
+       end
         c = @istream.getc()
       end
-
     end
    
     @istream.ungetc(c)   

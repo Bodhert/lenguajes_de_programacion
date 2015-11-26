@@ -4,8 +4,11 @@ require 'token'
 require 'calcex'
 
 class Parser
-  def initialize(istream)
-    @scan = Scanner.new(istream)
+  def initialize(expr,isFich)
+    @modo = isFich
+    @toEval = expr
+    @scan = Scanner.new
+    @assign = ""
   end
    
   def parse()
@@ -14,16 +17,62 @@ class Parser
   
   private
   def Prog()
-    result = Expr()
-    t = @scan.getToken()
-    
-    if t.type != :eof then
-      print "Expected EOF. Found ", t.type, ".\n"
-      raise ParseError.new
-    end
-  
-     result
+    ListExpr()
   end
+  
+  def ListExpr
+    if @modo
+      File.open(@toEval,"r") do |f|
+        while line = f.gets
+          @scan.setLine(line)
+         # puts line
+          result = Expr().evaluate
+          t = @scan.getToken()
+          if t.type != :eof then
+            print "Expected EOF. Found ", t.type, ".\n"
+            raise ParseError.new
+          end  
+          # print "=> " + result.to_s
+          # puts
+          if @assign != ""
+            toprint =  @assign[0,@assign.length-2]
+            print "=> " + result.to_s + " [" + toprint + "]"
+            @assign = ""
+            puts
+          else
+            print "=> " + result.to_s
+            puts
+          end
+        end
+      end
+    else
+      @scan.setLine(@toEval)
+      result = Expr().evaluate
+      t = @scan.getToken()
+      if t.type != :eof then
+        print "Expected EOF. Found ", t.type, ".\n"
+        raise ParseError.new
+      end 
+      if @assign != ""
+        toprint =  @assign[0,@assign.length-2]
+        print "=> " + result.to_s + " [" + toprint + "]"
+        @assign = ""
+        puts
+      else
+        print "=> " + result.to_s
+        puts
+      end
+    end
+  end
+    # result = Expr()
+    # t = @scan.getToken()
+    
+    # if t.type != :eof then
+    #   print "Expected EOF. Found ", t.type, ".\n"
+    #   raise ParseError.new
+    # end  
+    # result
+  
   
   def Expr() 
     RestExpr(Term())
@@ -100,6 +149,7 @@ class Parser
     #result = NumNode.new(0)
     if t.type == :equals
       result = NumNode.new(Expr().evaluate())
+      @assign = @assign +  lex + " <- "  + result.evaluate().to_s + ", " 
       result.assign lex
     else
       @scan.putBackToken

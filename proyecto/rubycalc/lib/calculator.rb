@@ -10,10 +10,9 @@ class Calculator
     @map = Hash.new
   end
   
-  def eval(expr)
-    parser = Parser.new(StringIO.new(expr))
-    ast = parser.parse()
-    return ast.evaluate()
+  def eval(expr,isFich)
+    parser = Parser.new(expr,isFich)
+    parser.parse()
   end
   
   def search(var)
@@ -55,6 +54,5 @@ class Calculator
     var = str[equal+1,str.length]
     return var.to_i
   end
-
 
 end

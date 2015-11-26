@@ -4,15 +4,15 @@ require 'rubygems'
 require 'calculator'
 require 'calcex'
 
-$stdout.print "> "
-$stdout.flush
+#$stdout.print "> "
+#$stdout.flush
 
 $calc = Calculator.new()
 
 $calc.enviroment
 
 preference = false 
-
+fichero = false
 for i in 0..ARGV.length
   argument = ARGV[i]
   if ARGV[i] == "-e"
@@ -32,22 +32,28 @@ for i in 0..ARGV.length
       $calc.assign(variable,integer)
     end
   elsif argument.to_s.include? "."
-    File.open(argument, "r") do |f|
-      f.each_line do |line|
-        puts "= " + $calc.eval(line).to_s
-      end
-    end
+    fichero = true
+    $calc.eval(argument,true)
   end
 end
 
-text = $stdin.gets
+if(!fichero)
+  print "> "
+end
 
-begin
-  puts "= " + $calc.eval(text).to_s
-rescue ParseError
-  puts "Parse Error"
-rescue UnrecognizedTokenException
-  puts "UnrecognizedTokenException"
-# rescue
-#   puts "Unkown exception"
+while !fichero && text = gets
+  # $stdout.print "> "
+  # $stdout.flush
+  #text = $stdin.gets
+  #text = gets
+  begin 
+    $calc.eval(text,false)
+  rescue ParseError
+    puts "Parse Error"
+  rescue UnrecognizedTokenException
+    puts "UnrecognizedTokenException"
+    # rescue
+    # puts "Unkown exception"
+  end
+  print "> "
 end
