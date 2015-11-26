@@ -13,7 +13,8 @@ $calc.enviroment
 
 preference = false 
 
-for i in 0..ARGV.length 
+for i in 0..ARGV.length
+  argument = ARGV[i]
   if ARGV[i] == "-e"
     preference = true
   elsif ARGV[i] == "-v"
@@ -30,6 +31,12 @@ for i in 0..ARGV.length
       integer = $calc.splitInt(var)
       $calc.assign(variable,integer)
     end
+  elsif argument.to_s.include? "."
+    File.open(argument, "r") do |f|
+      f.each_line do |line|
+        puts "= " + $calc.eval(line).to_s
+      end
+    end
   end
 end
 
@@ -41,6 +48,6 @@ rescue ParseError
   puts "Parse Error"
 rescue UnrecognizedTokenException
   puts "UnrecognizedTokenException"
-rescue
-  puts "Unkown exception"
+# rescue
+#   puts "Unkown exception"
 end
