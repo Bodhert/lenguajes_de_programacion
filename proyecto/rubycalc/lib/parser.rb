@@ -29,7 +29,7 @@ class Parser
           result = Expr().evaluate
           t = @scan.getToken()
           if t.type != :eof then
-            print "Expected EOF. Found ", t.type, ".\n"
+            #print "Expected EOF. Found ", t.type, ".\n"
             raise ParseError.new
           end  
           # print "=> " + result.to_s
@@ -50,7 +50,7 @@ class Parser
       result = Expr().evaluate
       t = @scan.getToken()
       if t.type != :eof then
-        print "Expected EOF. Found ", t.type, ".\n"
+        #print "Expected EOF. Found ", t.type, ".\n"
         raise ParseError.new
       end 
       if @assign != ""
@@ -64,16 +64,7 @@ class Parser
       end
     end
   end
-    # result = Expr()
-    # t = @scan.getToken()
     
-    # if t.type != :eof then
-    #   print "Expected EOF. Found ", t.type, ".\n"
-    #   raise ParseError.new
-    # end  
-    # result
-  
-  
   def Expr() 
     RestExpr(Term())
   end
@@ -132,7 +123,7 @@ class Parser
         return PlusNode.new(result)
       end
 
-      puts "Expected S or M or P  found #{t.type} at line #{t.line}"
+     # puts "Expected S or M or P  found #{t.type} at line #{t.line}"
       raise ParseError.new   
     end
     @scan.putBackToken
@@ -177,8 +168,8 @@ class Parser
       elsif t.lex == "C"
         return ClearNode.new
       end
-      puts "Parse Error: expected R found: " + t.lex
-      puts "at line: " + t.line.to_s + "col: " + t.col.to_s
+      #puts "Parse Error: expected R found: " + t.lex
+      #puts "at line: " + t.line.to_s + "col: " + t.col.to_s
       raise ParseError.new
     end
     
@@ -188,13 +179,13 @@ class Parser
       if t.type == :rparen then
         return result
       end
-      puts "Parse Error "
-      puts "at line: " + t.line.to_s + "col: " + t.col.to_s
+      #puts "Parse Error "
+      #puts "at line: " + t.line.to_s + "col: " + t.col.to_s
       raise ParseError.new
     end
   
-    print "Parse "
-    puts "at line: " + t.line.to_s + "col: " + t.col.to_s
+    #print "Parse "
+    #puts "at line: " + t.line.to_s + "col: " + t.col.to_s
     raise ParseError.new
   end
 end

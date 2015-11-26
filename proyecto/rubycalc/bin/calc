@@ -41,7 +41,7 @@ if(!fichero)
   print "> "
 end
 
-while !fichero && text = gets
+while !fichero && text = $stdin.gets
   # $stdout.print "> "
   # $stdout.flush
   #text = $stdin.gets
@@ -49,11 +49,11 @@ while !fichero && text = gets
   begin 
     $calc.eval(text,false)
   rescue ParseError
-    puts "Parse Error"
+    puts "*parse error"
   rescue UnrecognizedTokenException
-    puts "UnrecognizedTokenException"
-    # rescue
-    # puts "Unkown exception"
+    puts "*parse error"
+  rescue
+    puts "*parse error"
   end
   print "> "
 end
